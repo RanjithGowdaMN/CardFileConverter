@@ -53,7 +53,7 @@ namespace CardFileConverter
             settings.Controls.Add(FolderRow("Output folder", output, false), 0, 1);
             var options = new FlowLayoutPanel { Dock = DockStyle.Fill, WrapContents = false, Padding = new Padding(0, 4, 0, 0) };
             options.Controls.Add(new Label { Text = "Text encoding", Width = 122, Height = 30, TextAlign = ContentAlignment.MiddleLeft, ForeColor = UiTheme.Muted });
-            encoding.Items.AddRange(new object[] { "UTF-8", "Windows-1252" }); encoding.SelectedIndex = 0;
+            encoding.Items.AddRange(new object[] { "UTF-8 BOM", "Windows-1252" }); encoding.SelectedIndex = 0;
             options.Controls.Add(encoding);
             if (audit) options.Controls.Add(sort);
             else options.Controls.Add(new Label { Text = "Supports .txt and extensionless embossing files", AutoSize = true, Margin = new Padding(22, 5, 0, 0), ForeColor = UiTheme.Muted, Font = new Font("Segoe UI", 9) });

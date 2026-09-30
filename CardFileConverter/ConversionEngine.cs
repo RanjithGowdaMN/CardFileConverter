@@ -16,7 +16,7 @@ namespace CardFileConverter
 
     public static class ConversionEngine
     {
-        public static readonly Encoding Utf8 = new UTF8Encoding(false, true);
+        public static readonly Encoding Utf8 = new UTF8Encoding(true, true);
         private static readonly Dictionary<string, string> AuditHeaders = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
             {"CARD_NO", "CARD #"}, {"PRODCT_CODE", "PRODCT CODE"}, {"EMBOSSED_NAME", "EMBOSSED NAME"},

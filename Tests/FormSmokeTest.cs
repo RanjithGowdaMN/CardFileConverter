@@ -80,7 +80,7 @@ internal static class FormSmokeTest
             RunBatch(inline); // Existing output must fail while retaining its history.
             var records = new HistoryStore(store.Folder).Load(out unreadable);
             Assert(records.Count == 3 && records.Count(r => r.Outcome == "Success") == 2 && records[0].Outcome == "Failed", "Success and failure survive a new history-store instance");
-            Assert(records.All(r => r.Encoding == "UTF-8" && r.Ordering == "Input order"), "History captures conversion settings");
+            Assert(records.All(r => r.Encoding == "UTF-8 BOM" && r.Ordering == "Input order"), "History captures conversion settings");
             Assert(records.All(r => r.Bank == "KARTY" && r.BankSelection == "Auto-detect" && r.OutputFolder == Path.Combine(root, r.Mode == "Audit" ? "Audit output" : "Inline output")), "History retains bank and exact selected output folder");
             Capture(form, results, "Inline-tab.png");
             tabs.SelectedIndex = 0;

@@ -9,7 +9,7 @@ Open `CardFileConverter/bin/Release/CardFileConverter.exe` after building, or op
 1. Select the **Audit conversion** or **Inline conversion** tab. Each tab keeps its own folders, options and results for the current session.
 2. Select the input folder. All CSV files directly inside it are processed (not subfolders).
 3. Choose the output folder; the default is `Converted` inside the input folder. Files are saved directly in the chosen folder, without Audit, Inline or bank subfolders.
-4. Choose UTF-8 (default) or Windows-1252 for input/output. Unicode byte-order marks are detected when reading.
+4. Choose UTF-8 BOM (default) or Windows-1252 for input/output. UTF-8 outputs begin with the BOM bytes `EF BB BF`. UTF-8 inputs with or without a BOM are supported. Outputs retain line breaks between records without an extra trailing newline.
 5. Choose **Auto-detect**, **KARTY**, **QNB**, or **RAYAN BANK** in the Bank profile dropdown.
 6. Click **Convert files**. Each file reports its bank and success/failure independently. Existing output files are never overwritten. Use a fresh output folder for reruns.
 

@@ -244,7 +244,14 @@ namespace CardFileConverter
             string temporary = Path.Combine(outputFolder, "." + Guid.NewGuid().ToString("N") + ".tmp");
             try
             {
-                File.WriteAllLines(temporary, lines, encoding);
+                using (var writer = new StreamWriter(temporary, false, encoding))
+                {
+                    for (int i = 0; i < lines.Count; i++)
+                    {
+                        if (i > 0) writer.Write("\r\n");
+                        writer.Write(lines[i]);
+                    }
+                }
                 try { File.Move(temporary, target); }
                 catch (IOException)
                 {

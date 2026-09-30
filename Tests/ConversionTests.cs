@@ -100,6 +100,7 @@ internal static class ConversionTests
                 File.WriteAllText(Path.Combine(temporary, "Converted_carrier.txt"), "001|unchanged  \r\n");
                 string result = ConversionEngine.ConvertFile(csv, Path.Combine(temporary, "output"), false, false, ConversionEngine.Utf8);
                 byte[] first = File.ReadAllBytes(result);
+                Assert(File.ReadAllText(result) == "001|unchanged  |1|001|value", "Inline output has no trailing newline and preserves field spaces");
                 bool refused = false;
                 try { ConversionEngine.ConvertFile(csv, Path.Combine(temporary, "output"), false, false, ConversionEngine.Utf8); } catch (IOException) { refused = true; }
                 Assert(refused && File.ReadAllBytes(result).SequenceEqual(first), "Existing output never overwritten");
@@ -120,6 +121,8 @@ internal static class ConversionTests
                 File.WriteAllBytes(csv, new byte[] { 83, 78, 44, 78, 79, 84, 69, 13, 10, 49, 44, 0xff, 13, 10 });
                 Expect<System.Text.DecoderFallbackException>(() => ConversionEngine.ReadCsv(csv, ConversionEngine.Utf8), "Invalid UTF-8 rejected without replacement");
                 File.WriteAllText(csv, "SN,D_Status\r\n1,Passed\r\n");
+                string auditOutput = ConversionEngine.ConvertFile(csv, Path.Combine(temporary, "audit-output"), true, false, ConversionEngine.Utf8);
+                Assert(File.ReadAllText(auditOutput) == "SN\r\n1", "Audit output separates records without a trailing newline");
                 Reject(() => ConversionEngine.ConvertFile(csv, temporary, true, false, ConversionEngine.Utf8), "Engine rejects output in input folder");
                 using (var locked = new FileStream(csv, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
                     Expect<IOException>(() => ConversionEngine.ReadCsv(csv, ConversionEngine.Utf8), "Locked input file handled as I/O failure");
